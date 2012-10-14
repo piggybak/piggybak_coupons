@@ -8,19 +8,19 @@ module PiggybakCoupons
       Piggybak::LineItem.send(:include, ::PiggybakCoupons::LineItemDecorator)
     end
 
-    initializer "piggybak_coupons.line_item_types" do |app|
+    config.before_initialize do
       Piggybak.config do |config|
-        config.line_item_types[:coupon_application] = { :visible => true, :nested_attrs => true, :fields => ["coupon_application"], :allow_destroy => true } 
+        config.line_item_types[:coupon_application] = { :visible => true,
+                                                        :nested_attrs => true,
+                                                        :fields => ["coupon_application"],
+                                                        :allow_destroy => true,
+                                                        :class_name => "::PiggybakCoupons::CouponApplication"
+                                                      } 
       end
+    end
 
+    initializer "piggybak_coupons.rails_admin_config" do |app|
       RailsAdmin.config do |config|
-        config.model Piggybak::LineItem do
-          edit do
-            field :coupon_application do
-              active true
-            end
-          end
-        end
         config.model PiggybakCoupons::CouponApplication do
           label "Coupon"
           visible false

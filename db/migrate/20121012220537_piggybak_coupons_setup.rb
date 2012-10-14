@@ -3,10 +3,10 @@ class PiggybakCouponsSetup < ActiveRecord::Migration
     create_table :coupons do |t|
       t.string :code, :null => false
       t.decimal :amount, :null => false
-      t.string :type, :null => false
+      t.string :discount_type, :null => false
       t.decimal :min_cart_total, :null => false
       t.date :expiration_date
-      t.integer :number_uses
+      t.integer :allowed_applications
     end
     create_table :coupon_applications do |t|
       t.references :line_item

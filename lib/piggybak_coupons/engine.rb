@@ -26,7 +26,14 @@ module PiggybakCoupons
           visible false
 
           edit do
-            field :code
+            field :code do
+              read_only do
+                !bindings[:object].new_record?
+              end
+              pretty_value do
+                bindings[:object].coupon ? bindings[:object].coupon.code : ""
+              end 
+            end
           end
         end
       end

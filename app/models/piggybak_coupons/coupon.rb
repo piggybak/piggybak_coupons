@@ -29,7 +29,7 @@ module PiggybakCoupons
       coupon
     end
      
-    def self.apply_discount(code, object)
+    def self.apply_discount(code, object, shipcost = 0.0)
       coupon = Coupon.find_by_code(code)
       return 0 if coupon.nil?
  
@@ -46,6 +46,8 @@ module PiggybakCoupons
           else
             return 0.00
           end
+        elsif object.is_a?(Piggybak::Cart)
+          return -1*shipcost.to_f
         end
       end
     end   

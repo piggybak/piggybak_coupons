@@ -21,6 +21,11 @@ module PiggybakCoupons
       # Allowed applications check 
       return "Coupon has already been used #{coupon.allowed_applications} times." if !already_applied && (coupon.coupon_applications.size >= coupon.allowed_applications)
 
+      if object.is_a?(Piggybak::Order) && coupon.discount_type == "ship"
+        ship_line_item = object.line_items.detect { |li| li.line_item_type == "shipment" }
+        return "No shipping on this order." if !ship_line_item
+      end
+
       coupon
     end
      
@@ -34,7 +39,14 @@ module PiggybakCoupons
       elsif coupon.discount_type == "%"
         return -1*(coupon.amount/100)*object.subtotal
       elsif coupon.discount_type == "ship"
-        # TODO: Determine shipcost and set value
+        if object.is_a?(Piggybak::Order)
+          ship_line_item = object.line_items.detect { |li| li.line_item_type == "shipment" }
+          if ship_line_item
+            return -1*ship_line_item.price
+          else
+            return 0.00
+          end
+        end
       end
     end   
   end

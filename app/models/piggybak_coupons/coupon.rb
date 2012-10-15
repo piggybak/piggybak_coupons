@@ -1,6 +1,6 @@
 module PiggybakCoupons
   class Coupon < ActiveRecord::Base
-    set_table_name 'coupons'
+    self.table_name = 'coupons'
 
     validates_presence_of :code, :amount, :discount_type, :min_cart_total
     has_many :coupon_applications
@@ -16,7 +16,7 @@ module PiggybakCoupons
       return "Expired coupon." if coupon.expiration_date < Date.today
 
       # Min cart total check
-      return "Order does not meet minimum total requirements." if object.subtotal < coupon.min_cart_total.to_f
+      return "Order does not meet minimum total for coupon." if object.subtotal < coupon.min_cart_total.to_f
 
       # Allowed applications check 
       return "Coupon has already been used #{coupon.allowed_applications} times." if !already_applied && (coupon.coupon_applications.size >= coupon.allowed_applications)

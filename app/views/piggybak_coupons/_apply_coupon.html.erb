@@ -1,0 +1,11 @@
+<%= javascript_include_tag "piggybak_coupons/piggybak_coupons" %>
+
+<div id="piggybak_coupon_apply_box">
+<div id="coupon_response" style="display:none;"></div>
+<input type="text" name="piggybak_coupon_code" id="coupon_code" />
+<input type="submit" value="Apply Coupon" id="apply_coupon" />
+</div>
+
+<script type="text/javascript">
+var coupon_lookup = "<%= piggybak_coupons.apply_coupon_url %>";
+</script>

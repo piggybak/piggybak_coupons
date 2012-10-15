@@ -14,9 +14,14 @@ module PiggybakCoupons
                                                         :nested_attrs => true,
                                                         :fields => ["coupon_application"],
                                                         :allow_destroy => true,
-                                                        :class_name => "::PiggybakCoupons::CouponApplication"
+                                                        :class_name => "::PiggybakCoupons::CouponApplication",
+                                                        :display_in_cart => "Discount"
                                                       } 
       end
+    end
+
+    initializer "piggybak_coupons.precompile_hook" do |app|
+      app.config.assets.precompile += ['piggybak_coupons/piggybak_coupons.js']
     end
 
     initializer "piggybak_coupons.rails_admin_config" do |app|

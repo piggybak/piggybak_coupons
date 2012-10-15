@@ -4,20 +4,18 @@ module PiggybakCoupons
 
     def preprocess_coupon_application
       self.description = "Coupon"
-      if self.new_record?
-        coupon = Coupon.valid_coupon(self.coupon_application.code, self.order)
-        if coupon
-          self.price = Coupon.apply_discount(coupon.code, self.order)
-          self.coupon_application.coupon_id = coupon.id
-        end
-      else
-        coupon = Coupon.valid_coupon(self.coupon_application.coupon.code, self.order)
-        if coupon
-          self.price = Coupon.apply_discount(self.coupon_application.coupon.code, self.order)
-        else
-          # TODO: Mark to destroy
+      self.coupon_application.order = self.order
+      if !self.new_record?
+        valid_coupon = ::PiggybakCoupons::Coupon.valid_coupon(self.coupon_application.coupon.code, self.order, true)
+        if !valid_coupon.is_a?(::PiggybakCoupons::Coupon)
+          self.mark_for_destruction
         end
       end
+    end
+
+    def postprocess_coupon_application
+      self.price = ::PiggybakCoupons::Coupon.apply_discount(self.coupon_application.coupon.code, self.order)
+      true
     end 
   end
 end

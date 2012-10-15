@@ -7,19 +7,19 @@ module PiggybakCoupons
 
     attr_accessible :code, :amount, :discount_type, :min_cart_total
 
-    def self.valid_coupon(code, object)
+    def self.valid_coupon(code, object, already_applied)
       # First check
       coupon = Coupon.find_by_code(code)
-      return false if coupon.nil?
+      return "Invalid coupon code." if coupon.nil?
 
       # Expiration date check
-      return false if coupon.expiration_date < Date.today
+      return "Expired coupon." if coupon.expiration_date < Date.today
 
       # Min cart total check
-      # return false if object.subtotal < coupon.min_cart_total
+      return "Order does not meet minimum total requirements." if object.subtotal < coupon.min_cart_total.to_f
 
       # Allowed applications check 
-      # return false if coupon.allowed_applications >= coupon.coupon_applications
+      return "Coupon has already been used #{coupon.allowed_applications} times." if !already_applied && (coupon.coupon_applications.size >= coupon.allowed_applications)
 
       coupon
     end
@@ -33,7 +33,9 @@ module PiggybakCoupons
         return -1*coupon.amount
       elsif coupon.discount_type == "%"
         return -1*(coupon.amount/100)*object.subtotal
-      end 
+      elsif coupon.discount_type == "ship"
+        # TODO: Determine shipcost and set value
+      end
     end   
   end
 end

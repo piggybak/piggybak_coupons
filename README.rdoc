@@ -1,3 +1,5 @@
 = PiggybakCoupons
 
-This project rocks and uses MIT-LICENSE.
+Coupon support for Piggybak. Includes types %, $, and freeshipping. Coupons have a specified amount (tied to % and $ use), a minimum cart total, expiration date, and number of uses.
+
+CanCan access must be updated to allow admin access to view coupons.

@@ -26,6 +26,31 @@ module PiggybakCoupons
 
     initializer "piggybak_coupons.rails_admin_config" do |app|
       RailsAdmin.config do |config|
+        config.model PiggybakCoupons::Coupon do
+          navigation_label "Orders"
+          label "Coupon"
+
+          list do
+            field :code
+            field :coupon_type
+            field :min_cart_total do
+              formatted_value do
+                "$#{sprintf("%.2f", value)}"
+              end
+            end
+            field :expiration_date
+            field :application_detail
+          end
+          edit do
+            field :code
+            field :amount
+            field :discount_type, :enum 
+            field :min_cart_total
+            field :expiration_date
+            field :allowed_applications
+          end
+        end
+
         config.model PiggybakCoupons::CouponApplication do
           label "Coupon"
           visible false

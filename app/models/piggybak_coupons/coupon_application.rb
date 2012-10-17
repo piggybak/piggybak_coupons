@@ -1,7 +1,7 @@
 module PiggybakCoupons
   class CouponApplication < ActiveRecord::Base
     # TODO: figure out how to avoid this
-    set_table_name 'coupon_applications'
+    self.table_name = 'coupon_applications'
 
     belongs_to :coupon
     belongs_to :line_item, :class_name => "::Piggybak::LineItem", :dependent => :destroy

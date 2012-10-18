@@ -1,4 +1,7 @@
 $(function() {
+	$('#coupon_code').change(function() {
+		$(this).data('changed', true);
+	});
 	$('#shipping select').change(function() {
 		piggybak_coupons.apply_coupon(false);
 		return false;		
@@ -13,6 +16,7 @@ $(function() {
 	});
 	setTimeout(function() {
 		if($('#coupon_code').val() != '') {
+			$('#coupon_code').data('changed', true);
 			piggybak_coupons.apply_coupon(false);
 		}
 	}, 500);
@@ -20,6 +24,13 @@ $(function() {
 
 var piggybak_coupons = {
 	apply_coupon: function(on_submit) {
+		if(!$('#coupon_code').data('changed')) {
+			if(on_submit) {
+				$('#new_piggybak_order').submit();
+			}
+			return;
+		}
+		$('#coupon_code').data('changed', false);
 		$('#coupon input[type=hidden]').remove();
 		$('#coupon_response').hide();
 		$.ajax({

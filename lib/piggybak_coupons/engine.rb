@@ -15,8 +15,10 @@ module PiggybakCoupons
                                                         :fields => ["coupon_application"],
                                                         :allow_destroy => true,
                                                         :class_name => "::PiggybakCoupons::CouponApplication",
-                                                        :display_in_cart => "Discount"
+                                                        :display_in_cart => "Discount",
+                                                        :sort => config.line_item_types[:payment][:sort]
                                                       } 
+        config.line_item_types[:payment][:sort] += 1
       end
     end
 

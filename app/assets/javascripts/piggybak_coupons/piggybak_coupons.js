@@ -2,9 +2,17 @@ $(function() {
 	$('#coupon_code').change(function() {
 		$(this).data('changed', true);
 	});
-	$('#shipping select').change(function() {
+	piggybak.shipping_els.live('change', function() {
+		if($('#coupon_code').val() != '') {
+			setTimeout(function() {
+				$('#coupon_code').data('changed', true);
+				piggybak_coupons.apply_coupon(false);
+			}, 500);
+		}
+	});
+	$('#shipping select').live('change', function() {
+		$('#coupon_code').data('changed', true);
 		piggybak_coupons.apply_coupon(false);
-		return false;		
 	});
 	$('#apply_coupon').click(function() {
 		piggybak_coupons.apply_coupon(false);

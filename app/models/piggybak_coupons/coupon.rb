@@ -14,6 +14,12 @@ module PiggybakCoupons
     validates_numericality_of :allowed_applications, :greater_than_or_equal_to => 0
     validate :validate_dollar_discount
 
+    after_initialize :generate_code, :if => Proc.new { |giftcert| giftcert.new_record? }
+    def generate_code
+      # TODO: Replace 12 with configurable giftcert code length
+      self.code = (0...12).map{65.+(rand(26)).chr}.join
+    end
+
     def validate_dollar_discount
       if self.discount_type == "$" && self.amount > self.min_cart_total
         self.errors.add(:min_cart_total, "Minimum cart total must be greater than amount for dollar discount.")

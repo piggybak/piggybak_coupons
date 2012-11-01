@@ -18,7 +18,7 @@ $(function() {
 		piggybak_coupons.apply_coupon(false);
 		return false;		
 	});
-	$('#submit input').click(function() {
+	$('#submit input').unbind('click').click(function() {
 		piggybak_coupons.apply_coupon(true);
 		return false;
 	});
@@ -60,7 +60,9 @@ var piggybak_coupons = {
 					$('#coupon_application_row').show();
 					piggybak.update_totals();
 				} else {
-					$('#coupon_response').html(data.message).show();
+					if($('#coupon_code').val() != '') {
+						$('#coupon_response').html(data.message).show();
+					}
 					$('#coupon_application_total').html('$0.00');
 					$('#coupon_application_row').hide();
 					piggybak.update_totals();

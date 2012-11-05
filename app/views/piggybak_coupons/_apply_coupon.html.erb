@@ -3,7 +3,9 @@
 <div id="piggybak_coupon_apply_box">
 <div id="coupon_response" style="display:none;"></div>
 <input type="text" name="piggybak_coupon_code" id="coupon_code" value="<%= params.has_key?(:piggybak_coupon_code) ? params[:piggybak_coupon_code] : '' %>" />
-<input type="submit" value="Apply Coupon" id="apply_coupon" />
+<%= image_tag "ajax-loader.gif", :style => "display:none;" %>
+<br />
+<small>This will be applied automatically when modified.</small>
 </div>
 
 <script type="text/javascript">

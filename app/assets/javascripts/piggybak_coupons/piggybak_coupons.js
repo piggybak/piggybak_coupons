@@ -1,46 +1,29 @@
 $(function() {
 	$('#coupon_code').change(function() {
-		$(this).data('changed', true);
+		piggybak_coupons.apply_coupon();
 	});
 	piggybak.shipping_els.live('change', function() {
 		if($('#coupon_code').val() != '') {
 			setTimeout(function() {
-				$('#coupon_code').data('changed', true);
-				piggybak_coupons.apply_coupon(false);
+				piggybak_coupons.apply_coupon();
 			}, 500);
 		}
 	});
 	$('#shipping select').live('change', function() {
-		$('#coupon_code').data('changed', true);
-		piggybak_coupons.apply_coupon(false);
-	});
-	$('#apply_coupon').click(function() {
-		piggybak_coupons.apply_coupon(false);
-		return false;		
-	});
-	$('#submit input').unbind('click').click(function() {
-		piggybak_coupons.apply_coupon(true);
-		return false;
+		piggybak_coupons.apply_coupon();
 	});
 	setTimeout(function() {
 		if($('#coupon_code').val() != '') {
-			$('#coupon_code').data('changed', true);
-			piggybak_coupons.apply_coupon(false);
+			piggybak_coupons.apply_coupon();
 		}
 	}, 500);
 });
 
 var piggybak_coupons = {
-	apply_coupon: function(on_submit) {
-		if(!$('#coupon_code').data('changed')) {
-			if(on_submit) {
-				$('#new_piggybak_order').submit();
-			}
-			return;
-		}
-		$('#coupon_code').data('changed', false);
+	apply_coupon: function() {
 		$('#coupon input[type=hidden]').remove();
 		$('#coupon_response').hide();
+		$('#coupon_ajax').show();
 		$.ajax({
 			url: coupon_lookup,
 			cached: false,
@@ -55,7 +38,7 @@ var piggybak_coupons = {
 					var el2 = $('<input>').attr('type', 'hidden').attr('name', 'piggybak_order[line_items_attributes][2][coupon_application_attributes][code]').val($('#coupon_code').val());
 					$('#coupon').append(el1);
 					$('#coupon').append(el2);
-					$('#coupon_response').html('Coupon successfully applied to order.');
+					$('#coupon_response').html('Coupon successfully applied to order.').show();
 					$('#coupon_application_total').html('-$' + (-1*parseFloat(data.amount)).toFixed(2));
 					$('#coupon_application_row').show();
 					piggybak.update_totals();
@@ -67,12 +50,10 @@ var piggybak_coupons = {
 					$('#coupon_application_row').hide();
 					piggybak.update_totals();
 				}
-				if(on_submit) {
-					$('#new_piggybak_order').submit();
-				}
+				$('#coupon_ajax').hide();
 			},
 			error: function() {
-				//do nothing right now
+				$('#coupon_ajax').hide();
 			}
 		});
 	}	

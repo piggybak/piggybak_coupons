@@ -11,9 +11,7 @@ TODO
 
 * Document installation notes
 
-* Modify JS so that coupon doesn't trigger AJAX if recently looked up
-
-* Add coupon success message
+* Modify JS to not require addition of "inputs", complete via backend filter instead.
 
 
 Copyright

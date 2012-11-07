@@ -10,6 +10,7 @@ module PiggybakCoupons
 
     config.before_initialize do
       Piggybak.config do |config|
+        config.extra_secure_paths << "/apply_coupon"
         config.line_item_types[:coupon_application] = { :visible => true,
                                                         :nested_attrs => true,
                                                         :fields => ["coupon_application"],

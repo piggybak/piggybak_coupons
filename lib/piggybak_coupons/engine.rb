@@ -30,7 +30,7 @@ module PiggybakCoupons
     initializer "piggybak_coupons.rails_admin_config" do |app|
       RailsAdmin.config do |config|
         config.model PiggybakCoupons::Coupon do
-          navigation_label "Orders"
+          navigation_label "Extensions"
           label "Coupon"
 
           list do

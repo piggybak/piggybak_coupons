@@ -41,6 +41,7 @@ var piggybak_coupons = {
 					$('#coupon_response').html('Coupon successfully applied to order.').show();
 					$('#coupon_application_total').html('-$' + (-1*parseFloat(data.amount)).toFixed(2));
 					$('#coupon_application_row').show();
+					piggybak.update_tax();
 					piggybak.update_totals();
 				} else {
 					if($('#coupon_code').val() != '') {
@@ -48,6 +49,7 @@ var piggybak_coupons = {
 					}
 					$('#coupon_application_total').html('$0.00');
 					$('#coupon_application_row').hide();
+					piggybak.update_tax();
 					piggybak.update_totals();
 				}
 				$('#coupon_ajax').hide();

@@ -16,6 +16,7 @@ module PiggybakCoupons
                                                         :nested_attrs => true,
                                                         :fields => ["coupon_application"],
                                                         :allow_destroy => true,
+                                                        :reduce_tax_subtotal => true,
                                                         :class_name => "::PiggybakCoupons::CouponApplication",
                                                         :display_in_cart => "Discount",
                                                         :sort => config.line_item_types[:payment][:sort]

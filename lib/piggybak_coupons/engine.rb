@@ -25,7 +25,7 @@ module PiggybakCoupons
       end
     end
 
-    initializer "piggybak_coupons.precompile_hook" do |app|
+    initializer "piggybak_coupons.precompile_hook", :group => :all do |app|
       app.config.assets.precompile += ['piggybak_coupons/piggybak_coupons.js']
     end
 

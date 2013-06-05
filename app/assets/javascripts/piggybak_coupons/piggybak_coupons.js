@@ -2,14 +2,14 @@ $(function() {
 	$('#coupon_code').change(function() {
 		piggybak_coupons.apply_coupon();
 	});
-	piggybak.shipping_els.live('change', function() {
+	$(document).on('change', piggybak.shipping_els, function() {
 		if($('#coupon_code').val() != '') {
 			setTimeout(function() {
 				piggybak_coupons.apply_coupon();
 			}, 500);
 		}
 	});
-	$('#shipping select').live('change', function() {
+	$('#shipping select').on('change', function() {
 		piggybak_coupons.apply_coupon();
 	});
 	setTimeout(function() {

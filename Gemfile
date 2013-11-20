@@ -5,8 +5,10 @@ source "http://rubygems.org"
 # development dependencies will be added by default to the :development group.
 gemspec
 
+gem 'rails', '3.2.15'
+
 # jquery-rails is used by the dummy application
-# gem "jquery-rails"
+gem "jquery-rails", '3.0.4'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or

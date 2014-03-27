@@ -22,11 +22,12 @@ module PiggybakCoupons
                                                         :sort => config.line_item_types[:payment][:sort]
                                                       } 
         config.line_item_types[:payment][:sort] += 1
+        config.additional_line_item_attributes[:coupon_application_attributes] = [:code]
       end
     end
 
-    initializer "piggybak_coupons.precompile_hook", :group => :all do |app|
-      app.config.assets.precompile += ['piggybak_coupons/piggybak_coupons.js']
+    initializer "piggybak_coupons.assets.precompile" do |app|
+      app.config.assets.precompile += ['piggybak_coupons/piggybak_coupons-application.js']
     end
 
     initializer "piggybak_coupons.rails_admin_config" do |app|

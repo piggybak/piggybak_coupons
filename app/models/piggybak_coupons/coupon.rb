@@ -1,11 +1,9 @@
 module PiggybakCoupons
   class Coupon < ActiveRecord::Base
-    self.table_name = 'coupons'
-
     has_many :coupon_applications
 
     attr_accessor :coupon_type, :application_detail
-    attr_accessible :code, :amount, :discount_type, :min_cart_total, :expiration_date, :allowed_applications
+    # attr_accessible :code, :amount, :discount_type, :min_cart_total, :expiration_date, :allowed_applications
 
     validates_presence_of :code, :amount, :discount_type, :min_cart_total, :expiration_date, :allowed_applications
     validates_uniqueness_of :code
@@ -61,7 +59,8 @@ module PiggybakCoupons
       if object.is_a?(Piggybak::Order) && coupon.discount_type == "ship"
         ship_line_item = object.line_items.detect { |li| li.line_item_type == "shipment" }
         return "No shipping on this order." if !ship_line_item
-      end 
+      end
+
       coupon
     end
      
@@ -69,11 +68,11 @@ module PiggybakCoupons
       coupon = Coupon.find_by_code(code)
       return 0 if coupon.nil?
  
-      # $ or % discount_type discount   
       if coupon.discount_type == "$"
         return -1*coupon.amount
       elsif coupon.discount_type == "%"
-        return (-1.to_f*(coupon.amount/100)*object.subtotal).to_c
+        coupon_amount = (-1.to_f*(coupon.amount.to_f/100.to_f)*object.subtotal)
+        return ((coupon_amount*100).to_i).to_f/100
       elsif coupon.discount_type == "ship"
         if object.is_a?(Piggybak::Order)
           ship_line_item = object.line_items.detect { |li| li.line_item_type == "shipment" }

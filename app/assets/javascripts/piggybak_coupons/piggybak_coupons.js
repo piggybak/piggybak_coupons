@@ -1,4 +1,7 @@
 $(function() {
+	if($('form#new_order').size() == 0) {
+		return;
+	}
 	$('#coupon_code').change(function() {
 		piggybak_coupons.apply_coupon();
 	});
@@ -34,8 +37,8 @@ var piggybak_coupons = {
 			dataType: "JSON",
 			success: function(data) {
 				if(data.valid_coupon) {
-					var el1 = $('<input>').attr('type', 'hidden').attr('name', 'piggybak_order[line_items_attributes][2][line_item_type]').val('coupon_application');
-					var el2 = $('<input>').attr('type', 'hidden').attr('name', 'piggybak_order[line_items_attributes][2][coupon_application_attributes][code]').val($('#coupon_code').val());
+					var el1 = $('<input>').attr('type', 'hidden').attr('name', 'order[line_items_attributes][2][line_item_type]').val('coupon_application');
+					var el2 = $('<input>').attr('type', 'hidden').attr('name', 'order[line_items_attributes][2][coupon_application_attributes][code]').val($('#coupon_code').val());
 					$('#coupon').append(el1);
 					$('#coupon').append(el2);
 					$('#coupon_response').html('Coupon successfully applied to order.').show();

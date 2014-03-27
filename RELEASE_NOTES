@@ -1,0 +1,4 @@
+0.1.0
+Released: 3.27.2014
+* Upgrade to Rails 4
+* `rake piggybak_coupons:install:migrations` in your main Rails application to receive updated migration. Run migration.

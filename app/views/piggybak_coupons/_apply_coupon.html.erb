@@ -1,5 +1,3 @@
-<%= javascript_include_tag "piggybak_coupons/piggybak_coupons" %>
-
 <div id="piggybak_coupon_apply_box">
 <div id="coupon_response" style="display:none;"></div>
 <input type="text" name="piggybak_coupon_code" id="coupon_code" value="<%= params.has_key?(:piggybak_coupon_code) ? params[:piggybak_coupon_code] : '' %>" />

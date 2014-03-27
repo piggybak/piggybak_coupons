@@ -1,3 +1,3 @@
 PiggybakCoupons::Engine.routes.draw do
-  match "/apply_coupon" => "coupon#apply"
+  get "/apply_coupon" => "coupon#apply"
 end

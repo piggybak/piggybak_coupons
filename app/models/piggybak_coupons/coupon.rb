@@ -3,7 +3,6 @@ module PiggybakCoupons
     has_many :coupon_applications
 
     attr_accessor :coupon_type, :application_detail
-    # attr_accessible :code, :amount, :discount_type, :min_cart_total, :expiration_date, :allowed_applications
 
     validates_presence_of :code, :amount, :discount_type, :min_cart_total, :expiration_date, :allowed_applications
     validates_uniqueness_of :code

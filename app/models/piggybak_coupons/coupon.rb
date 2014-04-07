@@ -43,7 +43,7 @@ module PiggybakCoupons
 
     def self.valid_coupon(code, object, already_applied)
       # First check
-      coupon = Coupon.find_by_code(code)
+      coupon = Coupon.where(code: code).first
       return "Invalid coupon code." if coupon.nil?
 
       # Expiration date check
@@ -64,7 +64,7 @@ module PiggybakCoupons
     end
      
     def self.apply_discount(code, object, shipcost = 0.0)
-      coupon = Coupon.find_by_code(code)
+      coupon = Coupon.where(code: code).first
       return 0 if coupon.nil?
  
       if coupon.discount_type == "$"
